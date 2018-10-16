@@ -17,13 +17,13 @@
 GIT_VERSION := $(shell git describe --tag --long --always)
 
 #FLOW_TYPE = #Lock-exchange# TGV# Channel-flow# Cylinder
-
+FLOW_TYPE = Channel-flow
 DEFS = -DVISU -DVISUEXTRA -DDOUBLE_PREC -DVERSION=\"$(GIT_VERSION)\"
 
 LCL = local# local,lad,sdu,archer
 IVER = 17# 15,16,17,18
 CMP = gcc# intel,gcc
-FFT = generic# mkl,generic,fftw3
+FFT = fftw3# mkl,generic,fftw3
 
 #######Minimum defs###########
 ifeq ($(FLOW_TYPE),Channel-flow)
@@ -85,9 +85,9 @@ ifeq ($(FFT),mkl)
 else ifeq ($(FFT),fftw3)
   #FFTW3_PATH=/usr 
   #FFTW3_PATH=/usr/lib64
-  FFTW3_PATH=/usr/local/Cellar/fftw/3.3.7_1
+  FFTW3_PATH=/usr/local/Cellar/fftw/3.3.8
   INC=-I$(FFTW3_PATH)/include
-  LIBFFT=-L$(FFTW3_PATH) -lfftw3 -lfftw3f
+  LIBFFT=-L$(FFTW3_PATH)/lib -lfftw3 -lfftw3f
 else ifeq ($(FFT),fftw3_f03)
   FFTW3_PATH=/usr                                #ubuntu # apt install libfftw3-dev
   #FFTW3_PATH=/usr/lib64                         #fedora # dnf install fftw fftw-devel
